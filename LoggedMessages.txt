@@ -1,6 +1,6 @@
 19-07-2017_15-04-08
 To check: 48115634
-Created revision 1 and added new PO line with unit cost=1000.
+Created revision 1 and added new PO line with unit cost=1000. test
 Approved revision 1.
 Verify with SAP that the added PO line has  gone through.
 
