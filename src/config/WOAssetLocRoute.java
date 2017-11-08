@@ -26,10 +26,10 @@ public class WOAssetLocRoute extends ActionKeywords {
 	public static void woAssetLocRoute() {
 //		testScroll("1000014");
 		
-//		scenario1("1000014");
-//		scenario2Task("1000014");
-//		scenario2Child("1000014");
-		scenario3();
+		scenario1("1000014");
+		scenario2Task("1000014");
+		scenario2Child("1000014");
+//		scenario3();
 	}
 	
     /*053.01. Any WO that is submitted for approval via the WO workflow must reference an Asset, Location or Route*/
