@@ -27,6 +27,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.interactions.Actions;
@@ -50,21 +51,29 @@ public class ActionKeywords {
 		Log.info("Opening Browser...");
 		try{	
 			Log.info("Try opening browser");
-			if(data.equals("Mozilla")){
+			if(data.equals("Mozilla")) {
 				Log.info("Mozilla is the browser");
 				driver=new FirefoxDriver();
+//				WebDriver driver;
+				System.setProperty("webdriver.gecko.driver", "////home-wdc//homedir$//mme9310//Documents//lib//geckodriver.exe");
+//				System.setProperty("webdriver.gecko.driver", "C:/Users/mme9310/Documents/lib/geckodriver.exe");
+				driver =new FirefoxDriver();
+
+//			    DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+//			    capabilities.setBrowserName("firefox");
+//			    //capabilities.setVersion("");
+//
+//			    capabilities.setCapability("marionette", true);
 				Log.info("Mozilla browser started");				
-				}
-			else if(data.equals("IE")){
+			} else if(data.equals("IE")) {
 				//Dummy Code, implement your own code
 				driver=new InternetExplorerDriver();
 				Log.info("IE browser started");
-				}
-			else if(data.equals("Chrome")){
+			} else if(data.equals("Chrome")) {
 				System.setProperty("webdriver.chrome.driver", "//home-wdc/homedir$/mme9310/Documents/lib");
 				driver=new ChromeDriver();
 				Log.info("Chrome browser started");
-				}
+			}
 			
 			int implicitWaitTime=(1);
 			driver.manage().timeouts().implicitlyWait(implicitWaitTime, TimeUnit.SECONDS);
@@ -87,8 +96,8 @@ public class ActionKeywords {
 		}catch(Exception e){
 			Log.info("Not able to navigate --- " + e.getMessage());
 			DriverScript.bResult = false;
-			}
 		}
+	}
 	
 	public static void login(String object, String data){
 		try{
@@ -97,9 +106,8 @@ public class ActionKeywords {
 			Log.info("Login: "+ data);
 //			String[] temp = data.split(",");
 			if (data.equalsIgnoreCase("maxadmin")) {
-				data = "mme9310";
-				password = "Kepler09242";	
-//				password="maxadmin";
+//				data = "mme9310";
+				password="maxadmin";
 			} else {
 				password="Kiwirail123";
 //				password="sirius";
@@ -131,7 +139,7 @@ public class ActionKeywords {
 			driver.findElement(By.xpath(".//*[contains(@id, 'password')]")).sendKeys(password);
 			driver.findElement(By.xpath(".//*[@id='loginbutton']")).click();
 			waitFor();
-		 }catch(Exception e){
+		}catch(Exception e){
  			Log.error("Not able to click --- " + e.getMessage());
  			DriverScript.bResult = false;
        	}
@@ -142,7 +150,7 @@ public class ActionKeywords {
 			Log.info("Logging out");
 			driver.findElement(By.id("titlebar_hyperlink_8-lbsignout_image")).click();
 			driver.close();
-			ActionKeywords.closeBrowser("","");
+//			ActionKeywords.closeBrowser("","");
 		 }catch(Exception e){
  			Log.error("Not able to click --- " + e.getMessage());
  			DriverScript.bResult = false;
@@ -1683,9 +1691,9 @@ public class ActionKeywords {
 				  activityType="Destress";
 				  priority="18";
 			  }
-			  
+			  waitFor5();
 			  driver.findElement(By.xpath(OR.getProperty("btn_New"))).click();
-			  waitFor();			  
+			  waitFor5();			  
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_AssetNum"))).sendKeys("1000014");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_Description"))).sendKeys(object.trim());
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_Worktype"))).sendKeys(data.trim());
@@ -1710,18 +1718,26 @@ public class ActionKeywords {
 				  activityType="Destress";
 				  priority="18";
 			  }
-			  
+			  waitFor5();
 			  driver.findElement(By.xpath(OR.getProperty("btn_New"))).click();
-			  waitFor();			  
+			  waitFor5();			  
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_AssetNum"))).sendKeys("1000047");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_Description"))).sendKeys(object.trim());
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_Worktype"))).sendKeys(data.trim());
+			  
+			  WebDriverWait wait = new WebDriverWait(driver, 15);
+			  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(OR.getProperty("txtbx_ActivityType"))));
+			    
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_ActivityType"))).click();
+			  
+			  System.out.println("Click txtbx_ActivityType");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_ActivityType"))).sendKeys(activityType);
+			  
+			  System.out.println("SendKeys txtbx_ActivityType");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_Priority"))).sendKeys(priority);
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_FinancialYear"))).sendKeys("2018");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_StartRefPoint"))).sendKeys("12");
-			  driver.findElement(By.xpath(OR.getProperty("txtbx_EndRefPoint"))).sendKeys("13");
+			  driver.findElement(By.xpath(OR.getProperty("txtbx_EndRefPoint"))).sendKeys("12");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_StartRefPointOffset"))).sendKeys("0");
 			  driver.findElement(By.xpath(OR.getProperty("txtbx_EndRefPointOffset"))).sendKeys("1");
 			  waitFor();
@@ -2011,7 +2027,7 @@ public class ActionKeywords {
 			  String objectVal = driver.findElement(By.xpath(OR.getProperty(object))).getAttribute("value");
 			  Log.info("objectVal = "+objectVal);
 			  Log.info("data = "+data);
-			  double objectInt = StringUtil.toInt(objectVal);
+			  double objectInt = StringUtil.toLong(objectVal);
 			  double dataInt = Double.valueOf(data);
 			  double newVal = (objectInt * dataInt) + objectInt;
 			  Log.info("objectInt = "+objectInt);
